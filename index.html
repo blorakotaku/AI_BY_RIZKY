@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>IA Rizky - Ringkas Video</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      width: 90%;
+      max-width: 500px;
+    }
+    input, button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    input {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    button {
+      background: #00c6ff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #floating-greeting {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 9999;
+      font-size: 16px;
+      animation: fadeIn 0.8s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>IA Rizky</h2>
+    <p><b>Saya buatan razxx blora.</b><br>Saya dibuat untuk membantu kalian meringkas video.</p>
+    <input type="text" id="nama" placeholder="Masukkan nama Anda..." onblur="sapa()" />
+    <input type="text" id="link" placeholder="Tempelkan link video YouTube..." />
+    <button onclick="kirim()">Ringkas dan Kirim ke Telegram</button>
+    <div class="footer">© Buatan tt@rizkywae666</div>
+  </div>
+
+  <div id="floating-greeting"></div>
+
+  <script>
+    function sapa() {
+      const nama = document.getElementById("nama").value.trim();
+      if (nama) {
+        const pesan = `👋 Halo ${nama}, saya Rizky. Saya siap bantu ringkas video kamu.`;
+        
+        const greetingBox = document.getElementById("floating-greeting");
+        greetingBox.innerText = pesan;
+        greetingBox.style.display = 'block';
+
+        const suara = new SpeechSynthesisUtterance(pesan);
+        speechSynthesis.speak(suara);
+
+        setTimeout(() => {
+          greetingBox.style.display = 'none';
+        }, 5000);
+      }
+    }
+
+    async function kirim() {
+      const nama = document.getElementById("nama").value.trim();
+      const link = document.getElementById("link").value.trim();
+
+      if (!nama || !link) {
+        alert("Masukkan nama dan link video YouTube!");
+        return;
+      }
+
+      try {
+        const res = await fetch("/summarize", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nama, link })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+      } catch (err) {
+        alert("Gagal mengirim permintaan. Pastikan server aktif.");
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
