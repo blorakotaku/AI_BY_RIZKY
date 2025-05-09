@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Panel Bot WhatsApp</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+    .container { background: white; padding: 20px; border-radius: 10px; width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    img { margin-top: 10px; max-width: 100%; border: 1px solid #ccc; padding: 5px; border-radius: 5px; }
+    h2, h3 { text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Panel Bot WhatsApp</h2>
+
+    <label>Telegram Bot Token:</label>
+    <input type="text" id="telegramToken" placeholder="Token Telegram">
+
+    <label>Telegram Chat ID:</label>
+    <input type="text" id="chatId" placeholder="Chat ID Telegram">
+
+    <button onclick="sendTelegramToken()">Hubungkan Telegram</button>
+
+    <hr>
+
+    <h3>Login WhatsApp</h3>
+
+    <button onclick="startWithQR()">Login via QR Code</button>
+    <div id="qr"><img id="qrImage" src=""></div>
+
+    <label>Login via Kode Base64:</label>
+    <textarea id="sessionCode" rows="4" placeholder="Paste session code (base64) di sini..."></textarea>
+    <button onclick="loginWithCode()">Login via Kode</button>
+
+    <button onclick="loginWithFile()">Login via File Session</button>
+  </div>
+
+  <script>
+    function sendTelegramToken() {
+      const token = document.getElementById('telegramToken').value;
+      const chatId = document.getElementById('chatId').value;
+
+      fetch('/set-telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, chatId })
+      }).then(res => res.json()).then(data => {
+        alert(data.status || "Telegram terhubung.");
+      });
+    }
+
+    function startWithQR() {
+      fetch('/start-qr').then(res => res.json()).then(data => {
+        document.getElementById('qrImage').src = data.qr;
+      }).catch(() => alert("Gagal memuat QR."));
+    }
+
+    function loginWithCode() {
+      const sessionCode = document.getElementById('sessionCode').value;
+      fetch('/login-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: sessionCode })
+      }).then(res => res.json()).then(data => {
+        alert(data.status || "Bot dijalankan.");
+      });
+    }
+
+    function loginWithFile() {
+      fetch('/login-file').then(res => res.json()).then(data => {
+        alert(data.status || "Bot dijalankan via file.");
+      });
+    }
+  </script>
+</body>
+</html>
