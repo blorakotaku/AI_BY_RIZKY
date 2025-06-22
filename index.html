@@ -1,126 +1,193 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>IA Rizky - Ringkas Video</title>
+  <meta charset="UTF-8">
+  <title>AI BY ANAK INDONESIA</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 0;
+      background: url('https://files.catbox.moe/6ewmh3.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial Black', sans-serif;
       color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-      width: 90%;
-      max-width: 500px;
+    .ascii-banner img {
+      max-width: 90%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
     }
-    input, button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 12px;
+    .chat-container {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .message {
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      box-shadow: 0 0 8px #ff0000aa;
+    }
+    .user {
+      align-self: flex-end;
+      background-color: #ff3333;
+      color: #000;
+    }
+    .bot {
+      align-self: flex-start;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .bot img, .bot video, .bot audio {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-top: 5px;
+      box-shadow: 0 0 6px red;
+    }
+    .input-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 10px;
+      background: rgba(0,0,0,0.8);
+    }
+    .input-area input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
       border: none;
-      border-radius: 8px;
       font-size: 16px;
     }
-    input {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-    }
-    button {
-      background: #00c6ff;
-      color: white;
-      font-weight: bold;
+    .input-area button, .input-area label, .input-area select {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff0000;
+      color: #fff;
       cursor: pointer;
     }
-    #floating-greeting {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    .input-area input[type="file"] {
       display: none;
-      z-index: 9999;
-      font-size: 16px;
-      animation: fadeIn 0.8s ease;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .footer {
-      margin-top: 30px;
+    .donation-box {
       text-align: center;
-      font-size: 12px;
-      color: #ccc;
+      padding: 10px;
+      background: rgba(0,0,0,0.6);
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px red;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>IA Rizky</h2>
-    <p><b>Saya buatan razxx blora.</b><br>Saya dibuat untuk membantu kalian meringkas video.</p>
-    <input type="text" id="nama" placeholder="Masukkan nama Anda..." onblur="sapa()" />
-    <input type="text" id="link" placeholder="Tempelkan link video YouTube..." />
-    <button onclick="kirim()">Ringkas dan Kirim ke Telegram</button>
-    <div class="footer">© Buatan tt@rizkywae666</div>
+  <div class="ascii-banner">
+    <img src="https://files.catbox.moe/ucbdj4.png" alt="ASCII RIZKY" />
   </div>
-
-  <div id="floating-greeting"></div>
+  <div class="chat-container" id="chat"></div>  <div class="donation-box">
+    <b>donasi</b> ke Dana: <b>0895420886464</b><br>
+    <b>doakan Rizky agar sehat & berkah selalu.</b>
+  </div>  <div class="input-area">
+    <select id="menu">
+      <option value="">-- ⏤͟͟͞͞ℜℑℨ𝔐𝔒𝔇𝔈交𝔖𝔢𝔓𝔘ℌ🕊 pilih Fitur --</option>
+      <option value="poll">AI BY RIZKY</option>
+      <option value="hd">Gambar HD</option>
+      <option value="short">Shortlink URL</option>
+      <option value="tiktok">Download TikTok</option>
+      <option value="tts">TEXT JADI SUARA</option>
+    </select>
+    <input type="text" id="prompt" placeholder="⏤͟͟͞͞ℜℑℨ𝔐𝔒𝔇𝔈交𝔖𝔢𝔓ℌ🕊.">
+    <button onclick="askAI()">Kirim</button>
+    <label for="imageUpload">GAMBAR</label>
+    <input type="file" id="imageUpload" accept="image/*" onchange="handleUpload(this)">
+    <button onclick="clearChat()"> Hapus chat</button>
+  </div><audio id="replySound" src="https://www.myinstants.com/media/sounds/discord-notification.mp3"></audio>
 
   <script>
-    function sapa() {
-      const nama = document.getElementById("nama").value.trim();
-      if (nama) {
-        const pesan = `👋 Halo ${nama}, saya Rizky. Saya siap bantu ringkas video kamu.`;
-        
-        const greetingBox = document.getElementById("floating-greeting");
-        greetingBox.innerText = pesan;
-        greetingBox.style.display = 'block';
-
-        const suara = new SpeechSynthesisUtterance(pesan);
-        speechSynthesis.speak(suara);
-
-        setTimeout(() => {
-          greetingBox.style.display = 'none';
-        }, 5000);
-      }
+    const chat = document.getElementById("chat");
+    const sound = document.getElementById("replySound");
+    function playSound() { sound.currentTime = 0; sound.play(); }
+    function saveChat() { localStorage.setItem("chat", chat.innerHTML); }
+    function loadChat() { chat.innerHTML = localStorage.getItem("chat") || ""; }
+    function clearChat() { chat.innerHTML = ''; localStorage.removeItem("chat"); }
+    function handleUpload(input) {
+      const file = input.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        chat.innerHTML += `<div class="message bot"><img src="${e.target.result}" alt="Upload"></div>`;
+        playSound(); saveChat(); chat.scrollTop = chat.scrollHeight;
+      };
+      reader.readAsDataURL(file);
     }
 
-    async function kirim() {
-      const nama = document.getElementById("nama").value.trim();
-      const link = document.getElementById("link").value.trim();
-
-      if (!nama || !link) {
-        alert("Masukkan nama dan link video YouTube!");
-        return;
-      }
-
+    async function askAI() {
+      const promptInput = document.getElementById("prompt");
+      const menu = document.getElementById("menu").value;
+      const text = promptInput.value.trim();
+      if (!menu || !text) return;
+      chat.innerHTML += `<div class="message user">${text}</div>`;
+      promptInput.value = '';
+      chat.scrollTop = chat.scrollHeight; saveChat();
+      const loading = document.createElement("div");
+      loading.className = "message bot"; loading.textContent = "⏤͟͟͞͞ℜℑℨ𝔐𝔒𝔇𝔈交𝔖𝔢𝔓𝔘ℌ🕊...";
+      chat.appendChild(loading); chat.scrollTop = chat.scrollHeight;
       try {
-        const res = await fetch("/summarize", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nama, link })
-        });
-
-        const data = await res.json();
-        alert(data.message);
-      } catch (err) {
-        alert("Gagal mengirim permintaan. Pastikan server aktif.");
-        console.error(err);
+        loading.remove();
+        if (menu === 'hd') {
+          chat.innerHTML += `<div class="message bot"><img src="https://image.pollinations.ai/prompt/${encodeURIComponent(text)} high resolution" alt="HD"></div>`;
+        } else if (menu === 'poll') {
+          const res = await fetch('https://text.pollinations.ai/openai', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: [{ role: 'user', content: text }], stream: false }) });
+          const json = await res.json();
+          chat.innerHTML += `<div class="message bot">${json?.choices?.[0]?.message?.content || 'Tidak ada jawaban.'}</div>`;
+        } else if (menu === 'short') {
+          const res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(text)}`);
+          const shortUrl = await res.text();
+          chat.innerHTML += `<div class="message bot">🔗 Short URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a></div>`;
+        } else if (menu === 'tiktok') {
+          const res = await fetch(`https://www.laurine.site/api/downloader/tiktok?url=${encodeURIComponent(text)}`);
+          const json = await res.json();
+          const video = json?.data?.no_watermark;
+          chat.innerHTML += `<div class="message bot">⏤͟͟͞͞ℜℑℨ𝔐𝔒𝔇𝔈交𝔖𝔢𝔓𝔘ℌ🕊 <video src="${video}" controls></video></div>`;
+        } else if (menu === 'tts') {
+          const models = [
+            "67aee909-5d4b-11ee-a861-00163e2ac61b",
+            "67ae0979-5d4b-11ee-a861-00163e2ac61b",
+            "67ad95a0-5d4b-11ee-a861-00163e2ac61b",
+            "f2ec72cc-110c-11ef-811c-00163e0255ec",
+            "67ae0f40-5d4b-11ee-a861-00163e2ac61b"
+          ];
+          const voice_id = models[Math.floor(Math.random() * models.length)];
+          const payload = {
+            raw_text: text,
+            url: "https://filme.imyfone.com/text-to-speech/anime-text-to-speech/",
+            product_id: "200054",
+            convert_data: [{
+              voice_id, speed: "1", volume: "50", text, pos: 0
+            }]
+          };
+          const res = await fetch("https://voxbox-tts-api.imyfone.com/pc/v1/voice/tts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          const json = await res.json();
+          const audio = json?.data?.convert_result?.[0]?.oss_url;
+          chat.innerHTML += `<div class="message bot">⏤͟͟͞͞ℜℑℨ𝔐𝔒𝔇𝔈交𝔖𝔢𝔓𝔘ℌ🕊 <audio controls src="${audio}"></audio></div>`;
+        }
+        playSound(); saveChat(); chat.scrollTop = chat.scrollHeight;
+      } catch (e) {
+        loading.remove();
+        chat.innerHTML += `<div class="message bot">❌ Error: ${e.message}</div>`;
       }
     }
-  </script>
-</body>
+    loadChat();
+  </script></body>
 </html>
